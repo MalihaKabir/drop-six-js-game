@@ -10,3 +10,6 @@ Drop Four is a two-player board game in which the players first choose a color a
 * Once your go is taken and you did not win, it'll be player Two's go
 * The gamer will continue until a winning combination of four is reached by player One or player Two, or until the grid is full and no winning combination was found
 * The first place to do this, wins.
+
+### screen-shot:
+![screencapture-malihakabir-github-io-drop-six-js-game-2020-08-11-14_43_11](https://user-images.githubusercontent.com/43598622/89876909-25693d80-dbe1-11ea-82ef-7ce9ceda9069.jpg)
