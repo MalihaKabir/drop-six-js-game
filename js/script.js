@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 	const currentPlayerDisplay = document.querySelector('.current-player');
+	const gameOver = document.getElementById('game-over');
 	const winningPlayer = document.querySelector('#winning-player');
 	const smallGrids = document.querySelectorAll('.grid div');
 	let currentPlayer = 1;
@@ -38,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			[ 36, 29, 22, 15 ],
 			[ 29, 22, 15, 8 ],
 			[ 22, 15, 8, 1 ],
-			[ 37, 30, 23, 162 ],
+			[ 37, 30, 23, 16 ],
 			[ 30, 23, 16, 9 ],
 			[ 23, 16, 9, 2 ],
 			[ 38, 31, 24, 17 ],
@@ -68,6 +69,8 @@ document.addEventListener('DOMContentLoaded', () => {
 			) {
 				winningPlayer.textContent = `Player ${currentPlayer - 1}`;
 				winningPlayer.classList.add('player-one');
+				gameOver.textContent = 'GAME OVER!';
+				gameOver.classList.add('player-one');
 				smallGrids.forEach((smallGrid) => smallGrid.removeEventListener('click', getScore));
 			} else if (
 				smallGridOne.className === 'ball-two' &&
@@ -77,6 +80,8 @@ document.addEventListener('DOMContentLoaded', () => {
 			) {
 				winningPlayer.textContent = `Player ${currentPlayer + 1}`;
 				winningPlayer.classList.add('player-two');
+				gameOver.textContent = 'GAME OVER!';
+				gameOver.classList.add('player-two');
 				smallGrids.forEach((smallGrid) => smallGrid.removeEventListener('click', getScore));
 			}
 		});
