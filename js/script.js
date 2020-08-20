@@ -1,35 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
 	const currentPlayerDisplay = document.querySelector('.current-player');
+	const gameOver = document.getElementById('game-over');
 	const winningPlayer = document.querySelector('#winning-player');
-	const startBtn = document.getElementById('start-btn');
 	const smallGrids = document.querySelectorAll('.grid div');
 	let currentPlayerOne = 1;
 	let currentPlayerTwo = 2;
 	let currentPlayer = currentPlayerOne;
+	currentPlayerDisplay.textContent = currentPlayer;
 
-	function startGame () {
-		currentPlayer = currentPlayerOne;
-		currentPlayerDisplay.textContent = currentPlayer;
-		winningPlayer.textContent = '. . .';
-
-		currentPlayerDisplay.classList.add('player-one');
-		currentPlayerDisplay.classList.remove('player-two');
-		smallGrids.forEach((smallGrid) => smallGrid.classList.remove('ball-one', 'ball-two'));
-		winningPlayer.classList.remove('player-one', 'player-two');
-
-		makeGridUnclickable();
-		makeGridClickable();
-		smallGrids.forEach((smallGrid) => smallGrid.removeEventListener('click', getScore));
-		smallGrids.forEach((smallGrid) => smallGrid.addEventListener('click', getScore));
-	}
-
-	function makeGridUnclickable () {
-		smallGrids.forEach((smallGrid, i) => {
-			smallGrid.removeEventListener('click', () => {
-				clickableSquares(i);
-			});
-		});
-	}
 	function makeGridClickable () {
 		smallGrids.forEach((smallGrid, i) => {
 			smallGrid.addEventListener('click', () => {
@@ -49,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
 				smallGrids[gridIndex].classList.add('ball-one');
 				currentPlayer = currentPlayerTwo;
 				currentPlayerDisplay.textContent = currentPlayer;
-
 				smallGrids[gridIndex].id = gridIndex;
 
 				currentPlayerDisplay.classList.remove('player-one');
@@ -59,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
 				smallGrids[gridIndex].classList.add('ball-two');
 				currentPlayer = currentPlayerOne;
 				currentPlayerDisplay.textContent = currentPlayer;
-
 				smallGrids[gridIndex].id = gridIndex;
 
 				currentPlayerDisplay.classList.remove('player-two');
@@ -121,43 +97,37 @@ document.addEventListener('DOMContentLoaded', () => {
 			[ 3, 4, 5, 6 ],
 		];
 
-		winningArrays.forEach((smallArray) => {
+		winningArrays.map((smallArray) => {
 			const smallGridOne = smallGrids[smallArray[0]];
 			const smallGridTwo = smallGrids[smallArray[1]];
 			const smallGridThree = smallGrids[smallArray[2]];
 			const smallGridFour = smallGrids[smallArray[3]];
-
 			if (
 				smallGridOne.classList.contains('ball-one') &&
 				smallGridTwo.classList.contains('ball-one') &&
 				smallGridThree.classList.contains('ball-one') &&
 				smallGridFour.classList.contains('ball-one')
 			) {
-				winningPlayer.textContent = `Player ${currentPlayer - 1}! Game over.`;
+				winningPlayer.textContent = `Player ${currentPlayer - 1}`;
 				winningPlayer.classList.add('player-one');
-
-				currentPlayerDisplay.classList.add('player-one');
-
-				makeGridUnclickable();
+				gameOver.textContent = 'GAME OVER!';
+				gameOver.classList.add('player-one');
 				smallGrids.forEach((smallGrid) => smallGrid.removeEventListener('click', getScore));
-				startBtn.removeEventListener('click', startGame);
-				startBtn.addEventListener('click', startGame);
 			} else if (
 				smallGridOne.className === 'ball-two' &&
 				smallGridTwo.className === 'ball-two' &&
 				smallGridThree.className === 'ball-two' &&
 				smallGridFour.className === 'ball-two'
 			) {
-				winningPlayer.textContent = `Player ${currentPlayer + 1}! Game over.`;
+				winningPlayer.textContent = `Player ${currentPlayer + 1}`;
 				winningPlayer.classList.add('player-two');
-
-				makeGridUnclickable();
+				gameOver.textContent = 'GAME OVER!';
+				gameOver.classList.add('player-two');
 				smallGrids.forEach((smallGrid) => smallGrid.removeEventListener('click', getScore));
-				startBtn.removeEventListener('click', startGame);
-				startBtn.addEventListener('click', startGame);
 			}
 		});
 	}
 
-	startBtn.addEventListener('click', startGame);
+	makeGridClickable();
+	smallGrids.forEach((smallGrid) => smallGrid.addEventListener('click', getScore));
 });
